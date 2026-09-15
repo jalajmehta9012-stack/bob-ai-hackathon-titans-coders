@@ -4,76 +4,166 @@
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+Before you begin, ensure you have the following:
 
-- [ ] [e.g., Python 3.11+]
-- [ ] [e.g., Node.js 18+]
-- [ ] [e.g., Docker Desktop]
-- [ ] [e.g., An IBM Cloud account with watsonx.ai access]
+- [x] **Python 3.10 or later** — the only runtime requirement. No virtual environment or package manager is needed.
+
+To verify your Python version:
+
+```powershell
+# Windows (PowerShell)
+python --version
+```
+
+```bash
+# macOS / Linux
+python3 --version
+```
+
+Expected output: `Python 3.10.x` or higher. If Python is not installed, download it from [python.org](https://www.python.org/downloads/).
+
+---
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and fill in the values:
+None required. The tool uses no API keys, no environment variables, and no `.env` file.
 
-```bash
-cp .env.example .env
-```
-
-| Variable | Description | Required |
-|---|---|---|
-| `WATSONX_API_KEY` | Your IBM watsonx.ai API key | Yes |
-| `WATSONX_PROJECT_ID` | Your watsonx.ai project ID | Yes |
-| `DATABASE_URL` | PostgreSQL connection string | Yes |
-| `SLACK_WEBHOOK_URL` | Slack webhook for alerts | No |
+---
 
 ## Installation
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/[your-org]/[your-repo].git
-cd [your-repo]
+No installation step is required. The tool uses only Python 3 standard library modules. There is no `requirements.txt` and no `pip install` needed.
 
-# 2. Install backend dependencies
-[your command — e.g.: pip install -r requirements.txt]
-
-# 3. Install frontend dependencies (if applicable)
-[your command — e.g.: cd frontend && npm install]
-
-# 4. Set up the database (if applicable)
-[your command — e.g.: python manage.py migrate]
+```powershell
+# Windows (PowerShell) — clone and enter the repo
+git clone https://github.com/your-org/bob-ai-hackathon-titans-coders.git
+cd bob-ai-hackathon-titans-coders
 ```
+
+```bash
+# macOS / Linux
+git clone https://github.com/your-org/bob-ai-hackathon-titans-coders.git
+cd bob-ai-hackathon-titans-coders
+```
+
+---
 
 ## Running the Application
 
-```bash
-# Start the backend
-[your command — e.g.: uvicorn app.main:app --reload]
+### Windows (PowerShell)
 
-# Start the frontend (in a separate terminal, if applicable)
-[your command — e.g.: cd frontend && npm run dev]
+```powershell
+python src/main.py src/sample.json
 ```
 
-The application will be available at: `http://localhost:[PORT]`
-
-## Running Tests
+### macOS / Linux
 
 ```bash
-[your test command — e.g.: pytest tests/ -v]
+python3 src/main.py src/sample.json
 ```
 
-## Quick Demo (Optional)
+### Expected output
 
-If you have a demo script or sample data to showcase the project quickly:
+The tool prints a BLUF summary and four structured sections to stdout, then writes `src/report.json`:
+
+```
+========================================================================
+  BOTTOM LINE UP FRONT (BLUF)
+========================================================================
+  Analysis of 23 raw alerts produced N correlated clusters across M
+  unique source IPs. The highest-risk cluster (C00X, [CRITICAL], risk
+  score Y.YY) originates from <IP> and maps to <techniques>.
+  Immediate investigation is recommended for N critical/high clusters;
+  review report.json for full detail.
+  NOTES: Threat intelligence corroborates SIEM activity in ...
+========================================================================
+
+  SECTION 1 -- ALERT COUNTS BY SEVERITY
+  ...
+
+  SECTION 2 -- TOP 5 ATT&CK TECHNIQUES (by cluster frequency)
+  ...
+
+  SECTION 3 -- AFFECTED HOSTS / IPs
+  ...
+
+  SECTION 4 -- CLUSTER DETAIL  (sorted by risk score desc)
+  ...
+
+Report written to: src/report.json
+```
+
+---
+
+## Optional CLI Flags
+
+| Flag | Default | Description |
+|---|---|---|
+| `--output PATH` or `-o PATH` | `<input_dir>/report.json` | Path to write the JSON report |
+| `--time-window SECONDS` | `300` | Correlation time window in seconds |
+| `--match-fields FIELD,FIELD` | Uses `DEFAULT_RULES` | Override correlation fields with a single custom rule |
+
+Examples:
+
+```powershell
+# Windows — custom output path
+python src/main.py src/sample.json --output C:\tmp\report.json
+
+# Windows — wider time window (10 minutes)
+python src/main.py src/sample.json --time-window 600
+
+# Windows — correlate only on src_ip + hostname
+python src/main.py src/sample.json --match-fields src_ip,hostname
+```
+
+---
+
+## Verifying It Works
+
+After a successful run:
+
+1. **Console output** ends with `Report written to: src/report.json`.
+2. **`src/report.json` exists** and contains a JSON object with keys `generated_at`, `total_raw_alerts`, `total_clusters`, `severity_counts`, `top_techniques`, and `clusters`.
+
+Quick check on Windows:
+
+```powershell
+# Confirm the file exists and show the top-level keys
+python -c "import json; d=json.load(open('src/report.json')); print(list(d.keys()))"
+```
+
+Expected output:
+
+```
+['generated_at', 'total_raw_alerts', 'total_clusters', 'severity_counts', 'top_techniques', 'clusters']
+```
+
+---
+
+## Running the MITRE Mapper Self-Test
+
+[`src/mitre_mapper.py`](../src/mitre_mapper.py) includes an inline test that shows which ATT&CK techniques each event in `sample.json` matches, with the triggering keywords printed for every match:
+
+```powershell
+# Windows
+python src/mitre_mapper.py
+```
 
 ```bash
-[e.g.: python demo/seed_demo_data.py]
-[e.g.: open http://localhost:8000/demo]
+# macOS / Linux
+python3 src/mitre_mapper.py
 ```
+
+---
 
 ## Troubleshooting
 
-| Issue | Solution |
-|---|---|
-| [e.g., `ModuleNotFoundError`] | [e.g., Run `pip install -r requirements.txt` again] |
-| [e.g., Database connection refused] | [e.g., Ensure PostgreSQL is running: `docker compose up db`] |
-| [e.g., watsonx.ai 401 error] | [e.g., Check `WATSONX_API_KEY` in your `.env` file] |
+| Issue | Likely cause | Solution |
+|---|---|---|
+| `python: command not found` | Python not in PATH | Use `python3` instead of `python`, or add Python to PATH |
+| `Python 3.X.Y` but `X < 10` | Python version too old | Install Python 3.10+ from python.org |
+| `ModuleNotFoundError: No module named 'normalizer'` | Script not run from the repo root | Run as `python src/main.py src/sample.json` from the repo root directory, not from inside `src/` |
+| `ERROR: input file not found: src/sample.json` | Wrong working directory | Ensure your terminal is in the repo root (`bob-ai-hackathon-titans-coders/`) before running |
+| `ERROR: could not parse input file` | Malformed JSON in input | Validate the input file with `python -m json.tool src/sample.json` |
+| `report.json` is not created | Permission error on output path | Check write permissions on `src/`, or use `--output` to write to a writable location |
+| Empty stdout output | Input JSON array is empty | Confirm `src/sample.json` is not empty; the tool prints `WARNING: no alerts produced` and exits with code 0 if the normalised list is empty |
