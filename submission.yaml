@@ -1,69 +1,64 @@
-# =============================================================================
-# HACKATHON SUBMISSION METADATA
-# =============================================================================
-# Instructions:
-#   - Fill in ALL required fields (marked with # REQUIRED)
-#   - Optional fields can be left as empty strings ""
-#   - Do NOT rename this file — the evaluation pipeline reads it by name
-#   - Use double quotes around all string values
-# =============================================================================
-
-team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+﻿team:
+  name: "Titans Coders"
+  track: "AI"
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Vrishin Patel"
+    email: "26dit050@charusat.edu.in"
   members:
-    - name: ""                         # REQUIRED — Team member 1
-      email: ""
-    - name: ""                         # Add more members by copying the two lines above
-      email: ""
-    - name: ""
-      email: ""
+    - name: "Vrishin Patel"
+      email: "26dit050@charusat.edu.in"
+    - name: "Aditya Mohite"
+      email: "26dit027@charusat.edu.in"
+    - name: "Krishn Rana"
+      email: "26dit053@charusat.edu.in"
+    - name: "Jalaj Mehta"
+      email: "26aiml041@charusat.edu.in"
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
-
-  problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
-
-  solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
-
-  key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
-
+  title: "Multi-Source Threat Correlation & BLUF Reporting"
+  problem_statement: >
+    Defence analysts receive thousands of alerts daily from SIEM systems,
+    satellite feeds, cyber sensors, and intelligence reports in different
+    formats. No human team can read them all. Missing a genuine threat is
+    catastrophic; chasing false positives wastes critical resources. Threat
+    assessments must also be produced in structured BLUF format so commanders
+    get a clear picture in minutes.
+  solution_summary: >
+    A four-stage Python pipeline built with IBM Bob that ingests simulated
+    SIEM alerts and threat intelligence feeds, normalizes them into a unified
+    schema, correlates related alerts using configurable field-match and
+    time-window rules, maps clusters to MITRE ATT&CK techniques, and generates
+    both a machine-readable JSON report and a commander-facing BLUF summary
+    with structured breakdowns.
+  key_features:
+    - "Multi-source ingest: SIEM alerts and threat intel feeds unified into one schema"
+    - "Configurable rule-based correlation with matched_rule attribution for auditability"
+    - "MITRE ATT&CK mapping with false-positive guards and keyword attribution logging"
+    - "CTID-style BLUF output: bottom line, why it matters, recommended action"
+    - "Dual output: report.json for pipelines and structured stdout for commanders"
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: ["Python"]
+    frameworks: []
+    ibm_technologies: ["IBM Bob"]
+    databases: []
+    other: ["Git", "GitHub Actions"]
+  what_we_are_most_proud_of: >
+    The dual-output design — every run produces both a machine-readable
+    report.json for downstream systems and a commander-facing BLUF with
+    structured breakdown. Correlation rules carry matched_rule attribution
+    so every cluster can be audited and explained.
+  known_limitations: >
+    MITRE ATT&CK mapping uses keyword matching against a built-in lookup
+    table, so false positives are possible on real-world data. Correlation
+    is rule-based, not ML-driven. Tested only against the included sample.json
+    fixture (24 entries); production hardening would require integration with
+    a live SIEM and a review workflow for ATT&CK mappings.
 
-  what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
-
-  known_limitations: >                 # Optional but recommended — be honest about gaps
-    Replace with any known limitations, incomplete features,
-    or shortcuts taken due to time constraints.
-
-# =============================================================================
-# ARTIFACT LOCATIONS
-# These paths are relative to the repo root. Only change if you moved files.
-# =============================================================================
 artifacts:
   source_code: "src/"
   setup_guide: "docs/setup-guide.md"
   architecture_doc: "docs/architecture.md"
-  demo_video: "demo/demo-video-link.txt"   # URL to hosted video (YouTube, Loom, Box)
-  live_demo: "demo/live-demo-url.txt"      # URL to deployed demo (optional)
+  demo_video: "demo/demo-video-link.txt"
+  live_demo: "demo/live-demo-url.txt"
   screenshots: "demo/screenshots/"
   presentation: "presentation/"
