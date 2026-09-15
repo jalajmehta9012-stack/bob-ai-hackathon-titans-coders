@@ -1,0 +1,580 @@
+{
+  "generated_at": "2026-09-15T09:05:15.975232+00:00",
+  "total_raw_alerts": 24,
+  "total_clusters": 9,
+  "severity_counts": {
+    "critical": 2,
+    "high": 4,
+    "medium": 2,
+    "low": 0,
+    "info": 1
+  },
+  "top_techniques": [
+    {
+      "id": "T1003",
+      "name": "OS Credential Dumping",
+      "cluster_count": 3
+    },
+    {
+      "id": "T1071",
+      "name": "Application Layer Protocol",
+      "cluster_count": 2
+    },
+    {
+      "id": "T1021",
+      "name": "Remote Services",
+      "cluster_count": 1
+    },
+    {
+      "id": "T1110",
+      "name": "Brute Force",
+      "cluster_count": 1
+    },
+    {
+      "id": "T1566",
+      "name": "Phishing",
+      "cluster_count": 1
+    }
+  ],
+  "clusters": [
+    {
+      "cluster_id": "C003",
+      "severity": "critical",
+      "risk_score": 16.67,
+      "matched_rule": "ip-pair",
+      "first_seen": "2026-09-15T08:01:00+00:00",
+      "last_seen": "2026-09-15T08:04:30+00:00",
+      "alert_count": 5,
+      "source_types": [
+        "siem_alert"
+      ],
+      "src_ips": [
+        "10.10.1.55"
+      ],
+      "hostnames": [
+        "ws-finance-01"
+      ],
+      "techniques": [
+        {
+          "id": "T1003",
+          "name": "OS Credential Dumping",
+          "tactic": "Credential Access",
+          "matched_keywords": [
+            "lsass",
+            "credential",
+            "mimikatz",
+            "ntds",
+            "hashdump"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:01:00Z",
+          "src_ip": "10.10.1.55",
+          "dst_ip": "10.10.1.10",
+          "hostname": "ws-finance-01",
+          "description": "LSASS memory read detected by EDR agent",
+          "severity": "critical",
+          "rule_name": "LSASS Access via OpenProcess"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:02:15Z",
+          "src_ip": "10.10.1.55",
+          "dst_ip": "10.10.1.10",
+          "hostname": "ws-finance-01",
+          "description": "Mimikatz execution pattern observed in process arguments",
+          "severity": "critical",
+          "rule_name": "Mimikatz Credential Dump"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:03:05Z",
+          "src_ip": "10.10.1.55",
+          "dst_ip": "10.10.1.10",
+          "hostname": "ws-finance-01",
+          "description": "NTDS.dit file access attempt on domain controller",
+          "severity": "high",
+          "rule_name": "NTDS Credential Harvest"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:03:50Z",
+          "src_ip": "10.10.1.55",
+          "dst_ip": "10.10.1.10",
+          "hostname": "ws-finance-01",
+          "description": "Hashdump utility invoked from suspicious parent process",
+          "severity": "high",
+          "rule_name": "Credential Dump via Hashdump"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:04:30Z",
+          "src_ip": "10.10.1.55",
+          "dst_ip": "10.10.1.10",
+          "hostname": "ws-finance-01",
+          "description": "Registry key read associated with cached credential extraction",
+          "severity": "medium",
+          "rule_name": "Cached Credential Access"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C005",
+      "severity": "critical",
+      "risk_score": 13.33,
+      "matched_rule": "ip-pair",
+      "first_seen": "2026-09-15T09:00:00+00:00",
+      "last_seen": "2026-09-15T09:03:15+00:00",
+      "alert_count": 4,
+      "source_types": [
+        "siem_alert"
+      ],
+      "src_ips": [
+        "10.10.4.101"
+      ],
+      "hostnames": [
+        "ws-dev-07"
+      ],
+      "techniques": [
+        {
+          "id": "T1071",
+          "name": "Application Layer Protocol",
+          "tactic": "Command and Control",
+          "matched_keywords": [
+            "beacon",
+            "c2",
+            "cobaltstrike",
+            "command and control",
+            "exfil"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T09:00:00Z",
+          "src_ip": "10.10.4.101",
+          "dst_ip": "198.51.100.77",
+          "hostname": "ws-dev-07",
+          "description": "Periodic beacon pattern detected to external C2 infrastructure",
+          "severity": "high",
+          "rule_name": "C2 Beacon Outbound"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T09:01:05Z",
+          "src_ip": "10.10.4.101",
+          "dst_ip": "198.51.100.77",
+          "hostname": "ws-dev-07",
+          "description": "CobaltStrike stager traffic pattern matched on port 443",
+          "severity": "critical",
+          "rule_name": "CobaltStrike C2 Pattern"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T09:02:30Z",
+          "src_ip": "10.10.4.101",
+          "dst_ip": "198.51.100.77",
+          "hostname": "ws-dev-07",
+          "description": "Command and control channel established \u2014 exfil suspected",
+          "severity": "critical",
+          "rule_name": "C2 Channel Established"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T09:03:15Z",
+          "src_ip": "10.10.4.101",
+          "dst_ip": "198.51.100.77",
+          "hostname": "ws-dev-07",
+          "description": "DNS beacon with high query frequency to newly registered domain",
+          "severity": "high",
+          "rule_name": "DNS Beacon Pattern"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C004",
+      "severity": "high",
+      "risk_score": 11.67,
+      "matched_rule": "ip-pair",
+      "first_seen": "2026-09-15T08:15:00+00:00",
+      "last_seen": "2026-09-15T08:18:30+00:00",
+      "alert_count": 5,
+      "source_types": [
+        "siem_alert",
+        "threat_intel"
+      ],
+      "src_ips": [
+        "10.10.2.88"
+      ],
+      "hostnames": [
+        "srv-app-02"
+      ],
+      "techniques": [
+        {
+          "id": "T1021",
+          "name": "Remote Services",
+          "tactic": "Lateral Movement",
+          "matched_keywords": [
+            "lateral",
+            "psexec",
+            "smb",
+            "wmi"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:15:00Z",
+          "src_ip": "10.10.2.88",
+          "dst_ip": "10.10.3.20",
+          "hostname": "srv-app-02",
+          "description": "PsExec remote execution detected between internal hosts",
+          "severity": "high",
+          "rule_name": "PsExec Lateral Movement"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:16:10Z",
+          "src_ip": "10.10.2.88",
+          "dst_ip": "10.10.3.20",
+          "hostname": "srv-app-02",
+          "description": "SMB admin share access from non-admin workstation",
+          "severity": "high",
+          "rule_name": "SMB Lateral Movement"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T08:17:00Z",
+          "src_ip": "10.10.2.88",
+          "dst_ip": "10.10.3.20",
+          "hostname": "srv-app-02",
+          "description": "WMI remote process creation observed across subnet boundary",
+          "severity": "medium",
+          "rule_name": "WMI Remote Execution"
+        },
+        {
+          "source_type": "threat_intel",
+          "timestamp": "2026-09-15T08:17:45Z",
+          "indicator_type": "ip",
+          "indicator_value": "10.10.2.88",
+          "dst_ip": "10.10.3.20",
+          "feed_name": "Internal Threat Exchange",
+          "description": "IP flagged for lateral movement activity in prior incident IR-2026-041",
+          "severity": "high"
+        },
+        {
+          "source_type": "threat_intel",
+          "timestamp": "2026-09-15T08:18:30Z",
+          "indicator_type": "ip",
+          "indicator_value": "10.10.2.88",
+          "dst_ip": "10.10.3.20",
+          "feed_name": "ISAC Feed",
+          "description": "Known lateral movement source IP \u2014 SMB exploitation reported by sector peers",
+          "severity": "medium"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C006",
+      "severity": "high",
+      "risk_score": 9.33,
+      "matched_rule": "ip-pair",
+      "first_seen": "2026-09-15T10:05:00+00:00",
+      "last_seen": "2026-09-15T10:07:10+00:00",
+      "alert_count": 4,
+      "source_types": [
+        "siem_alert"
+      ],
+      "src_ips": [
+        "203.0.113.9"
+      ],
+      "hostnames": [],
+      "techniques": [
+        {
+          "id": "T1003",
+          "name": "OS Credential Dumping",
+          "tactic": "Credential Access",
+          "matched_keywords": [
+            "credential"
+          ]
+        },
+        {
+          "id": "T1110",
+          "name": "Brute Force",
+          "tactic": "Credential Access",
+          "matched_keywords": [
+            "brute force",
+            "auth failure",
+            "password spray",
+            "login attempt"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T10:05:00Z",
+          "src_ip": "203.0.113.9",
+          "dst_ip": "10.10.1.1",
+          "hostname": null,
+          "description": "Multiple authentication failures detected \u2014 possible brute force attack",
+          "severity": "medium",
+          "rule_name": "Auth Failure Threshold Exceeded"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T10:05:45Z",
+          "src_ip": "203.0.113.9",
+          "dst_ip": "10.10.1.1",
+          "hostname": null,
+          "description": "Password spray pattern: same password attempted across 30 accounts",
+          "severity": "high",
+          "rule_name": "Password Spray Detection"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T10:06:20Z",
+          "src_ip": "203.0.113.9",
+          "dst_ip": "10.10.1.1",
+          "hostname": null,
+          "description": "Login attempt rate exceeds 200 per minute from single source IP",
+          "severity": "high",
+          "rule_name": "High Rate Login Attempts"
+        },
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T10:07:10Z",
+          "src_ip": "203.0.113.9",
+          "dst_ip": "10.10.1.1",
+          "hostname": null,
+          "description": "Auth failure spike \u2014 credential stuffing tool signature detected in user-agent",
+          "severity": "medium",
+          "rule_name": "Credential Stuffing Detected"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C007",
+      "severity": "high",
+      "risk_score": 4.67,
+      "matched_rule": "ip-pair",
+      "first_seen": "2026-09-15T11:30:00+00:00",
+      "last_seen": "2026-09-15T11:31:00+00:00",
+      "alert_count": 2,
+      "source_types": [
+        "siem_alert",
+        "threat_intel"
+      ],
+      "src_ips": [
+        "192.0.2.200"
+      ],
+      "hostnames": [
+        "ws-hr-04"
+      ],
+      "techniques": [
+        {
+          "id": "T1003",
+          "name": "OS Credential Dumping",
+          "tactic": "Credential Access",
+          "matched_keywords": [
+            "credential"
+          ]
+        },
+        {
+          "id": "T1566",
+          "name": "Phishing",
+          "tactic": "Initial Access",
+          "matched_keywords": [
+            "malicious attachment",
+            "credential harvest"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T11:30:00Z",
+          "src_ip": "192.0.2.200",
+          "dst_ip": "10.10.5.30",
+          "hostname": "ws-hr-04",
+          "description": "Spearphishing email with malicious attachment delivered to HR mailbox",
+          "severity": "medium",
+          "rule_name": "Spearphishing Attachment Detected"
+        },
+        {
+          "source_type": "threat_intel",
+          "timestamp": "2026-09-15T11:31:00Z",
+          "indicator_type": "ip",
+          "indicator_value": "192.0.2.200",
+          "dst_ip": "10.10.5.30",
+          "feed_name": "Phishing Intelligence Feed",
+          "description": "Known phishing sender IP \u2014 credential harvest campaigns reported",
+          "severity": "medium"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C008",
+      "severity": "high",
+      "risk_score": 2.33,
+      "matched_rule": null,
+      "first_seen": "2026-09-15T12:00:00+00:00",
+      "last_seen": "2026-09-15T12:00:00+00:00",
+      "alert_count": 1,
+      "source_types": [
+        "siem_alert"
+      ],
+      "src_ips": [
+        "10.10.8.99"
+      ],
+      "hostnames": [
+        "ws-mktg-02"
+      ],
+      "techniques": [
+        {
+          "id": "T1055",
+          "name": "Process Injection",
+          "tactic": "Defense Evasion",
+          "matched_keywords": [
+            "dll injection"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T12:00:00Z",
+          "src_ip": "10.10.8.99",
+          "dst_ip": "10.10.8.1",
+          "hostname": "ws-mktg-02",
+          "description": "DLL injection into explorer.exe detected by endpoint sensor",
+          "severity": "high",
+          "rule_name": "DLL Injection Detected"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C001",
+      "severity": "medium",
+      "risk_score": 1.33,
+      "matched_rule": null,
+      "first_seen": "2026-09-15T07:45:00+00:00",
+      "last_seen": "2026-09-15T07:45:00+00:00",
+      "alert_count": 1,
+      "source_types": [
+        "siem_alert"
+      ],
+      "src_ips": [
+        "10.10.6.55"
+      ],
+      "hostnames": [
+        "ws-ops-11"
+      ],
+      "techniques": [
+        {
+          "id": "T1059",
+          "name": "Command and Scripting Interpreter",
+          "tactic": "Execution",
+          "matched_keywords": [
+            "powershell"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T07:45:00Z",
+          "src_ip": "10.10.6.55",
+          "dst_ip": "10.10.6.1",
+          "hostname": "ws-ops-11",
+          "description": "PowerShell script execution with encoded command line argument",
+          "severity": "medium",
+          "rule_name": "Encoded PowerShell Execution"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C002",
+      "severity": "medium",
+      "risk_score": 1.33,
+      "matched_rule": null,
+      "first_seen": "2026-09-15T07:50:00+00:00",
+      "last_seen": "2026-09-15T07:50:00+00:00",
+      "alert_count": 1,
+      "source_types": [
+        "siem_alert"
+      ],
+      "src_ips": [
+        "10.10.7.22"
+      ],
+      "hostnames": [
+        "srv-db-03"
+      ],
+      "techniques": [
+        {
+          "id": "T1105",
+          "name": "Ingress Tool Transfer",
+          "tactic": "Command and Control",
+          "matched_keywords": [
+            "tool transfer",
+            "certutil"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "siem_alert",
+          "timestamp": "2026-09-15T07:50:00Z",
+          "src_ip": "10.10.7.22",
+          "dst_ip": "10.10.7.1",
+          "hostname": "srv-db-03",
+          "description": "Certutil used to download tool from external URL \u2014 ingress tool transfer suspected",
+          "severity": "medium",
+          "rule_name": "Certutil Tool Download"
+        }
+      ]
+    },
+    {
+      "cluster_id": "C009",
+      "severity": "info",
+      "risk_score": 0.33,
+      "matched_rule": null,
+      "first_seen": "2026-09-15T12:05:00+00:00",
+      "last_seen": "2026-09-15T12:05:00+00:00",
+      "alert_count": 1,
+      "source_types": [
+        "threat_intel"
+      ],
+      "src_ips": [],
+      "hostnames": [],
+      "techniques": [
+        {
+          "id": "T1071",
+          "name": "Application Layer Protocol",
+          "tactic": "Command and Control",
+          "matched_keywords": [
+            "beacon",
+            "command and control"
+          ]
+        }
+      ],
+      "alerts": [
+        {
+          "source_type": "threat_intel",
+          "timestamp": "2026-09-15T12:05:00Z",
+          "indicator_type": "domain",
+          "indicator_value": "evil-c2-domain.example.com",
+          "dst_ip": null,
+          "feed_name": "Open Threat Exchange",
+          "description": "Domain flagged for command and control infrastructure \u2014 beacon traffic observed",
+          "severity": "info"
+        }
+      ]
+    }
+  ]
+}
